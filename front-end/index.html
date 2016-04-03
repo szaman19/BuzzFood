@@ -7,16 +7,22 @@
         BuzzFOOD
     </title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <style media="screen">
       .box { width: 150px; border: 1px solid #9325BC; padding: 10px; }
       .box:hover { -moz-box-shadow: 0 0 10px #ccc; -webkit-box-shadow: 0 0 10px #ccc; box-shadow: 0 0 10px #ccc; }
+      h1{
+        color: #FF721A;
+        font-family: 'Lobster', cursive;
+        font-size: 10em;
+      }
     </style>
   </head>
   <body ng-controller="SearchController as search">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
-          <h2>What Doth Thou Want</h2>
+          <h1>BuzzFood</h1>
 
           <form name="searchQuery" class="form form-horizontal" ng-controller="formCtrl as ctrl" ng-submit="search.submit()">
 
@@ -24,7 +30,7 @@
                 <input class="form-control" type="text" ng-model="ctrl.query" value="">
             </span>
             <span class="form-group">
-              <input class="form-control" type="submit" value="Search">
+              <input class="form-control btn btn-primary" type="submit" value="Search">
               <!-- <input class="form-control"type="button" name="name" value="Surprise Me"> -->
               <!-- <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTcrqYznCNDlIoi3r6VzpYM_F9E-iYkbMPYdr3NtCQ0nfAdV5g-Khs3hlM" alt="" /> -->
             </span>
@@ -34,11 +40,10 @@
         </div>
       </div>
       <div class="row">
-
         <form class="" ng-controller="imageCtrl as imgCtrl" ng-submit="imgCtrl.sendImages()">
-          <div class=" col-sm-3" ng-repeat="(thumbnail,images) in search.results">
+          <div class="gallery" style="float:left"ng-repeat="(thumbnail,images) in search.results">
             <a href="#" class="image" ng-click="imgCtrl.addImage(images)">
-                <img ng-src="{{thumbnail}}" class="box"alt="" width="200px"/>
+                <img ng-src="{{thumbnail}}" class="box img-thumbnail "alt=""/>
             </a>
 
             <!-- <input name="name" value="" type="image" height="150" width="100" ng-src="{{thumbnail}}"> -->
@@ -50,9 +55,6 @@
             <input type="submit" name="name" value="I'm done">
         </form>
 
-      </div>
-      <div class="">
-        {{search.forminfo}}
       </div>
     </div>
     <script type="text/javascript" src="js/angular.min.js"></script>
