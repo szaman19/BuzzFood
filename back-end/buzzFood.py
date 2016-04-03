@@ -71,7 +71,29 @@ def fourSearch(tagDict):
 
 def restaurantRank(restaurantDict):
 	matchValue = sorted(set(restaurantDict.values()))
-	return matchValue
+	highestNum = matchValue[-1]
+
+	bestMatch = []
+	restaurantKeys = restaurantDict.keys()
+	while len(bestMatch) < 1:
+		for key in restaurantKeys:
+			if restaurantDict[key] == highestNum:
+				bestMatch.append(key)
+		matchValue.pop()
+		highestNum = matchValue[-1]
+	return bestMatch
+
+def restaurantInfo(restaurantList):
+	clientID = 'JD5WEQCZLAOXXPVBYZV1TOUONBMWCUXNHCJALUSQN5YTUHKA'
+	clientSecret = '1QW0UZYHRAVPJGCWA04JSJGHJ0RWEPW3XG3AF3GYJFUTYQRU'
+	client = foursquare.Foursquare(client_id = clientID, client_secret = clientSecret)
+
+	restaurantInfo = {}
+	for restaurant in restaurantList:
+		restaurantInfo[restaurant] = client.venues(restaurant)
+
+	return restaurantInfo
+
 
 def gifSearch(tagDict):
 	searchList = []
@@ -105,6 +127,7 @@ def main():
 	print tags
 	search = fourSearch(tags)
 	print json.dumps(search, indent=4, sort_keys=True)
-	print restaurantRank(search)
+	restaurantList = restaurantRank(search)
+	print restaurantInfo(restaurantList)
 
 main()
