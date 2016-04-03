@@ -1,62 +1,50 @@
 from flask import Flask, request, g, jsonify, make_response, current_app
-import os, json
+import os, json, requests
 from datetime import timedelta
 from functools import update_wrapper
 from flask.ext.cors import CORS
 
 app = Flask(__name__)
-# CORS(app)
-def crossdomain(origin=None, methods=None, headers=None,
-                max_age=21600, attach_to_all=True,
-                automatic_options=True):
-    if methods is not None:
-        methods = ', '.join(sorted(x.upper() for x in methods))
-    if headers is not None and not isinstance(headers, basestring):
-        headers = ', '.join(x.upper() for x in headers)
-    if not isinstance(origin, basestring):
-        origin = ', '.join(origin)
-    if isinstance(max_age, timedelta):
-        max_age = max_age.total_seconds()
+CORS(app)
 
-    def get_methods():
-        if methods is not None:
-            return methods
-
-        options_resp = current_app.make_default_options_response()
-        return options_resp.headers['allow']
-
-    def decorator(f):
-        def wrapped_function(*args, **kwargs):
-            if automatic_options and request.method == 'OPTIONS':
-                resp = current_app.make_default_options_response()
-            else:
-                resp = make_response(f(*args, **kwargs))
-            if not attach_to_all and request.method != 'OPTIONS':
-                return resp
-
-            h = resp.headers
-
-            h['Access-Control-Allow-Origin'] = origin
-            h['Access-Control-Allow-Methods'] = get_methods()
-            h['Access-Control-Max-Age'] = str(max_age)
-            if headers is not None:
-                h['Access-Control-Allow-Headers'] = headers
-            return resp
-
-        f.provide_automatic_options = False
-        return update_wrapper(wrapped_function, f)
-    return decorator
-
-@app.route('/query', methods=['Get'])
-@crossdomain(origin='*')
+@app.route('/query', methods=['GET'])
 
 def returnListOfImages():
+    query = request.args['query']
+    key = "AIzaSyBNWmypZhvryr_CUmVfJ8h1NLqWdfyIJDA"
+    cx = "018347742159790243558:yjmlvg2ulxg"
+    searchType = "image"
+    params = {
+		"key": key,
+		"cx" : cx,
+		"q":query,
+		"searchType":searchType,
+	}
+    url = "https://www.googleapis.com/customsearch/v1"
+    r = requests.get(url,params=params)
+    jsonDump = json.dumps(r.json())
+    searchResults = json.loads(jsonDump)
+    imageUrlDict = {}
+    for result in searchResults["items"]:
+		## Key is url of thumbnail, value is link to full image
+        imageUrlDict[result['image']['thumbnailLink'].encode('utf-8')] = result['link'].encode('utf-8')
+    print(imageUrlDict)
+    return jsonify(results=imageUrlDict)
+    #
+    # returnArray = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_x4IhsaCSKSsnjrtfX920IpOsU2fGktKUGICSf0Bio13WvCAITy2NOgx",\
+    # "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWJWbrqRHY4_KJVdYVxd4PvHzRqFjZInhDy1NDRcslhCM3QLObWIBb4fz7",\
+    # "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhW_JNH2I6A1XmeDv29KhyiYCjlIbZZqUvmMVoDsDcvT1E05FgXLcqBs"\
+    # ]
+    # print(request.args['query'])
+    # returnArray.append(request.args['query'])
+    # return jsonify(result=returnArray)
+@app.route('/imageTags',methods=['GET'])
+def getImageTag():
+    imageUrls = request.args['urls']
+    print(imageUrls)
+    print(type(imageUrls))
+    return "Working"
 
-    returnArray = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_x4IhsaCSKSsnjrtfX920IpOsU2fGktKUGICSf0Bio13WvCAITy2NOgx",\
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWJWbrqRHY4_KJVdYVxd4PvHzRqFjZInhDy1NDRcslhCM3QLObWIBb4fz7",\
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHhW_JNH2I6A1XmeDv29KhyiYCjlIbZZqUvmMVoDsDcvT1E05FgXLcqBs"\
-    ]
-    returnArray.append(request.form['query'])
-    return jsonify(result=returnArray)
+
 if __name__ == '__main__':
     app.run(debug=True)
