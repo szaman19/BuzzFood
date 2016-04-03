@@ -41,7 +41,9 @@ def returnListOfImages():
 @app.route('/imageTags',methods=['GET'])
 def getImageTag():
     imageUrls = request.args['urls']
-    print(imageUrls)
+    print(imageUrls) #String representation of list of image urls
+
+
     print(type(imageUrls))
     return "Working"
 
