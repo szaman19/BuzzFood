@@ -8,14 +8,11 @@ def getTags(imageURL):
     header = {}
     header['Authorization'] = "Bearer 9PLrJMMB6sl4qoSK8JPf8gy9mRVfvL"
     r = requests.get("https://api.clarifai.com/v1/tag/",headers = header,params=data)
-    #print r.url
     JSONTags = r.json()
     tags = JSONTags['results'][0]['result']['tag']
-    for value in tags:
-        print type(value)
-        print value, tags[value]
-        print "\n"
-    return "working" #JSONTags['results'][0]['result']['tag']
+    zipped = zip(tags['classes'],tags['probs'])
+    return zipped
+
 def intersection(tagsList):
     listIntersection = []
     return listIntersection
