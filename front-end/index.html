@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>
-        BuzzFOOD
+      BuzzFOOD
     </title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -18,7 +18,7 @@
           <form name="searchQuery" class="form form-horizontal" ng-controller="formCtrl as ctrl" ng-submit="search.submit()">
 
             <span class="form-group">
-                <input class="form-control" type="text" ng-model="ctrl.query" value="">
+              <input class="form-control" type="text" ng-model="ctrl.query" value="">
             </span>
             <span class="form-group">
               <input class="form-control btn btn-primary" type="submit" value="Search">
@@ -27,27 +27,27 @@
             </span>
             <!-- {{formCtrl.queryText}} -->
             <!-- {{ctrl.returnQuery()}} -->
-           </form>
+          </form>
         </div>
       </div>
       <div class="row">
         <form class="" ng-controller="imageCtrl as imgCtrl" ng-submit="imgCtrl.sendImages()">
-          <div class="gallery" style="float:left"ng-repeat="(thumbnail,images) in search.results">
+          <div class="gallery" style="float:left" ng-repeat="(thumbnail,images) in search.results">
             <a href="#" class="image" ng-click="imgCtrl.addImage(images)">
-                <img ng-src="{{thumbnail}}" class="box img-thumbnail "alt=""/>
+              <img ng-src="{{thumbnail}}" class="box img-thumbnail " alt=""/>
             </a>
 
             <!-- <input name="name" value="" type="image" height="150" width="100" ng-src="{{thumbnail}}"> -->
           </div>
-            <!-- <input ng-repeat="(images,thumbnail) in item" name="name" value="" type="image" height="150" width="100" ng-src="thumbnail">
+          <!-- <input ng-repeat="(images,thumbnail) in item" name="name" value="" type="image" height="150" width="100" ng-src="thumbnail">
             {{images}}
             {{thumbnail}} -->
 
-            <input type="submit" name="name" value="I'm done">
+          <input type="submit" name="name" value="I'm done">
         </form>
-    </div>
-    <script type="text/javascript" src="js/angular.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="images.json" charset="utf-8"></script>
-  </body>
-</html>
+      </div>
+      <script type="text/javascript" src="js/angular.min.js"></script>
+      <script type="text/javascript" src="js/app.js"></script>
+      <script type="text/javascript" src="images.json" charset="utf-8"></script>
+    </body>
+  </html>
