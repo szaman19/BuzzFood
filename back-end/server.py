@@ -1,8 +1,10 @@
+from __future__ import print_function
 from flask import Flask, request, g, jsonify, make_response, current_app
 import os, json, requests
 from datetime import timedelta
 from functools import update_wrapper
 from flask.ext.cors import CORS
+
 
 app = Flask(__name__)
 CORS(app)
@@ -66,12 +68,12 @@ def getImageTag():
         except Exception as e:
             print(e)
             print(JSONTags)
-    print(tagDict)
+    #print(tagDict)
     # return tagDict
 
 
     # print(imageUrlList) #String representation of list of image urls
-    print(imageUrlList) #String representation of list of image urls
+    #print(imageUrlList) #String representation of list of image urls
 
 
 
