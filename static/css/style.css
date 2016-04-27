@@ -1,0 +1,15 @@
+.box {
+  width: 150px;
+  border: 1px solid #9325BC;
+  padding: 10px;
+}
+.box:hover {
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+}
+h1 {
+  color: #FF721A;
+  font-family: 'Lobster', cursive;
+  font-size: 10em;
+}

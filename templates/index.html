@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="food">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      BuzzFOOD
+    </title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  </head>
+  <body ng-controller="SearchController as search">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <h1>BuzzFood</h1>
+
+          <form name="searchQuery" class="form form-horizontal" ng-controller="formCtrl as ctrl" ng-submit="search.submit()">
+
+            <span class="form-group">
+              <input class="form-control" type="text" ng-model="ctrl.query" value="">
+            </span>
+            <span class="form-group">
+              <input class="form-control btn btn-primary" type="submit" value="Search">
+              <!-- <input class="form-control"type="button" name="name" value="Surprise Me"> -->
+              <!-- <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTcrqYznCNDlIoi3r6VzpYM_F9E-iYkbMPYdr3NtCQ0nfAdV5g-Khs3hlM" alt="" /> -->
+            </span>
+            <!-- {{formCtrl.queryText}} -->
+            <!-- {{ctrl.returnQuery()}} -->
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <form class="" ng-controller="imageCtrl as imgCtrl" ng-submit="imgCtrl.sendImages()">
+          <div class="gallery" style="float:left" ng-repeat="(thumbnail,images) in search.results">
+            <a href="#" class="image" ng-click="imgCtrl.addImage(images)">
+              <img ng-src="{{thumbnail}}" class="box img-thumbnail " alt=""/>
+            </a>
+
+            <!-- <input name="name" value="" type="image" height="150" width="100" ng-src="{{thumbnail}}"> -->
+          </div>
+          <!-- <input ng-repeat="(images,thumbnail) in item" name="name" value="" type="image" height="150" width="100" ng-src="thumbnail">
+            {{images}}
+            {{thumbnail}} -->
+
+          <input type="submit" name="name" value="I'm done">
+        </form>
+      </div>
+      <script type="text/javascript" src="js/angular.min.js"></script>
+      <script type="text/javascript" src="js/app.js"></script>
+      <script type="text/javascript" src="images.json" charset="utf-8"></script>
+    </body>
+  </html>
+er
